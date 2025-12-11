@@ -168,12 +168,7 @@ answer = chatbot.query("What projects were discussed?")
 - First run will download the embedding model (may take time)
 - Ensure sufficient disk space for model storage
 
-## License
-
-[Add your license here]
-
-## Contributing
-
-[Add contribution guidelines here]
+### HOW TO RUN THE FRONTEND AND BACKEND CODE
+- Please refer HOW_TO_RUN.md to get details about running the backend and frontend.
 
 >>>>>>> 22acdbc (Initial commit with files for Meeting Miner solution)
