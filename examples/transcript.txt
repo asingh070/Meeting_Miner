@@ -1,0 +1,137 @@
+Meeting Transcript
+
+Project Name: AstraChat AI
+Participants:
+
+Meera (BA / Facilitator)
+
+Sarah (Business)
+
+Jay (Business)
+
+Jey (Development)
+
+Abhi (Development)
+
+Date: Tuesday, 10:00 AM – 10:30 AM (Approx.)
+
+00:00 – 02:00 | Casual Greetings
+
+Meera: Morning everyone! Can you all hear me?
+
+Sarah: Loud and clear. I mean, as clear as my coffee-deprived brain allows.
+
+Jay: Haha same. I’ve had two coffees already and still loading… like AstraChat’s typing icon.
+
+Jey: Oof, too soon Jay, too soon.
+
+Abhi: Guys, I literally joined 10 seconds ago and I already feel attacked.
+
+Meera: Okay okay, team, let’s settle. But yes, mood relatable.
+
+02:00 – 05:00 | Setting the Context
+
+Meera: So today’s call is mainly about the issues the business is facing with AstraChat AI—response delays, inconsistent answers, and the typing indicator UI glitch. Also, Sarah mentioned she wanted to discuss a side POC idea related to Snowflake Cortex.
+
+Sarah: Yup, we’ll get to that in a bit.
+
+Main Discussion – AstraChat AI Issues
+05:00 – 10:00 | Issue 1: Delay in Responses
+
+Jay: So from the business side, the biggest complaint right now is delay. Users type a query, hit enter, and the bot takes like 7–8 seconds to respond.
+
+Sarah: And sometimes longer. And we’re getting messages like “Is it broken?” or “Is it thinking about its life choices?”
+
+Jey: To be fair, Astra is thinking. She’s a deep thinker, okay?
+
+Meera: Haha, please. Let’s get serious guys. What do you think is causing the delay?
+
+Abhi: From our initial analysis, it’s mainly because of how we’re making multiple API hops. The bot calls our middle layer, which calls the LLM, which then calls your internal knowledge base.
+
+Jey: And each hop adds latency. We can optimize by implementing caching for repeated queries and reducing some unnecessary validation steps.
+
+10:00 – 15:00 | Issue 2: Inconsistent Answers
+
+Sarah: Another big one—the answers aren’t always consistent. Like sometimes Astra gives a great response, and the next time for the exact same question, it gives something vague or partially unrelated.
+
+Jay: Yeah. Users think the bot is moody.
+
+Abhi: Not moody… just… contextually creative.
+
+Jey: More specifically, the issue is the LLM is generating responses without enough grounding in your structured knowledge source. Some calls rely too heavily on the LLM’s own reasoning instead of your dataset.
+
+Meera: What can we do?
+
+Abhi: We’re planning to introduce more strict retrieval-augmented generation (RAG) rules. Basically, force the model to rely on the knowledge base before generative output.
+
+Jey: Also, we can add test prompts to check consistency before pushing changes.
+
+Sarah: Yes please. We need Astra to be smart, not… unpredictable.
+
+15:00 – 18:00 | Issue 3: Typing Indicator Disappearing Too Early
+
+Meera: And the UI issue—the typing icon disappearing long before the response shows. That’s causing confusion.
+
+Jay: Yeah customers think the bot has stopped responding.
+
+Abhi: That’s a frontend timing issue. The current trigger stops the typing animation as soon as the API acknowledges the request—not when the response actually arrives.
+
+Jey: We’ll change the frontend to keep the typing indicator on until the full response payload is received.
+
+Meera: How long to fix that?
+
+Jey: Two days, max.
+
+Side Topic – Snowflake Cortex POC
+18:00 – 24:00 | Business Asking Dev Team for Suggestions
+
+Sarah: So while we have you both… we’ve been thinking about another POC. Something to use Snowflake Cortex with a structured data source.
+
+Jay: The idea is to quickly answer internal queries about sales numbers, product inventory, and maybe forecasting. But we’re not sure what’s feasible.
+
+Jey: Cortex is great for SQL-backed insights. What exactly do you want it to do?
+
+Sarah: Like natural-language queries—“What were last month’s sales for Region X?” or “Which products are low in stock?”
+
+Abhi: That’s totally doable. Cortex can interpret NL queries and convert them to SQL automatically.
+
+Jay: Oh nice. We weren’t sure if that was really practical or just marketing hype.
+
+Jey: It’s practical as long as your data models are clean. Cortex hates messy tables.
+
+Meera: Same as all of us, honestly.
+
+Abhi: One suggestion—start small. Maybe just build a POC with one dataset—like Sales—and build a few sample prompt templates.
+
+Sarah: Makes sense. Maybe we’ll schedule a separate session for that.
+
+Final Discussion – Next Steps for AstraChat AI
+24:00 – 28:00 | Development Team’s Plan
+
+Meera: Okay, for AstraChat AI, can you list out what you’ll be working on?
+
+Jey: Sure.
+
+Optimize latency – caching + streamlining APIs.
+
+Improve consistency – stronger grounding via RAG and introducing test prompts.
+
+Fix typing indicator UI – ensure it stays until final response delivery.
+
+Abhi: And we’ll share a timeline by tomorrow lunchtime.
+
+Jay: Perfect.
+
+28:00 – 30:00 | Wrap-Up, Casual Banter
+
+Sarah: Alright guys, this was good. And thank you for not roasting Astra too much.
+
+Jey: Don’t worry. We love Astra. She’s like our digital child.
+
+Abhi: A slightly chaotic child, but still.
+
+Jay: Same as me when I was young.
+
+Meera: Okay team. I’ll send the meeting notes. Thanks everyone!
+
+All: Thanks! Bye!

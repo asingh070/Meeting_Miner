@@ -94,9 +94,21 @@ function initializeFileUpload() {
 }
 
 function handleFileSelect(file) {
+    // Validate file type - allow .txt and .json files
+    const fileName = file.name.toLowerCase();
+    if (!fileName.endsWith('.txt') && !fileName.endsWith('.json')) {
+        const fileNameDiv = document.getElementById('file-name');
+        fileNameDiv.textContent = `Error: Only .txt and .json files are supported. Selected: ${file.name}`;
+        fileNameDiv.style.display = 'block';
+        fileNameDiv.style.color = '#ff6b6b';
+        window.selectedFile = null;
+        return;
+    }
+    
     const fileNameDiv = document.getElementById('file-name');
     fileNameDiv.textContent = `Selected: ${file.name}`;
     fileNameDiv.style.display = 'block';
+    fileNameDiv.style.color = '';
     
     // Store file for processing
     window.selectedFile = file;
@@ -123,14 +135,42 @@ async function processMeeting() {
     try {
         let transcript = transcriptText;
         let transcriptJson = null;
+        let extractedTitle = meetingTitle; // Start with user-provided title
         
         if (window.selectedFile) {
             const fileContent = await readFile(window.selectedFile);
             if (window.selectedFile.name.endsWith('.json')) {
+                // Parse JSON file
                 transcriptJson = JSON.parse(fileContent);
                 transcript = fileContent;
+                
+                // Extract title and meeting_id from JSON if present
+                if (transcriptJson.title && !extractedTitle) {
+                    extractedTitle = transcriptJson.title;
+                    // Update the title input field
+                    document.getElementById('meeting-title').value = extractedTitle;
+                }
             } else {
+                // Handle TXT file
                 transcript = fileContent;
+                
+                // Try to extract title from TXT file (first line or "Title:" line)
+                const lines = fileContent.split('\n').slice(0, 3);
+                for (const line of lines) {
+                    const trimmed = line.trim();
+                    if (trimmed && !trimmed.toLowerCase().includes('meeting id') && !trimmed.includes(':')) {
+                        // First non-empty line that's not a metadata line might be title
+                        if (!extractedTitle && trimmed.length < 100) {
+                            extractedTitle = trimmed;
+                            document.getElementById('meeting-title').value = extractedTitle;
+                        }
+                        break;
+                    } else if (trimmed.toLowerCase().startsWith('title:')) {
+                        extractedTitle = trimmed.substring(6).trim();
+                        document.getElementById('meeting-title').value = extractedTitle;
+                        break;
+                    }
+                }
             }
         }
         
@@ -143,7 +183,7 @@ async function processMeeting() {
             },
             body: JSON.stringify({
                 transcript: transcript,
-                title: meetingTitle || null,
+                title: extractedTitle || null,
                 project_name: projectName || null,
                 transcript_json: transcriptJson
             })

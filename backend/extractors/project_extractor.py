@@ -25,18 +25,20 @@ The transcript may contain Hinglish (Hindi-English mix) or other multilingual co
 
 IMPORTANT: Only extract details about the MAIN project. Ignore other projects that are mentioned but are not the focus of this meeting.
 
-Return a JSON array with ONE project object (the main project) with the following structure:
-[
-  {
-    "name": "Main project name",
-    "description": "Detailed description of the main project",
-    "owner": "Person responsible (if mentioned)",
-    "status": "Proposed|In Progress|Blocked|Completed",
-    "timeline_hints": "Any timeline information mentioned"
-  }
-]
+Return a JSON object with a "projects" key containing an array with ONE project object (the main project) with the following structure:
+{
+  "projects": [
+    {
+      "name": "Main project name",
+      "description": "Detailed description of the main project",
+      "owner": "Person responsible (if mentioned)",
+      "status": "Proposed|In Progress|Blocked|Completed",
+      "timeline_hints": "Any timeline information mentioned"
+    }
+  ]
+}
 
-If the main project cannot be clearly identified, return an empty array []."""
+If the main project cannot be clearly identified, return {"projects": []}."""
 
     def __init__(self):
         """Initialize extractor."""
@@ -66,7 +68,7 @@ Be thorough - even brief mentions or side-chats can be important projects.
 Transcript:
 {transcript_text}
 
-Return a JSON array of projects. If no projects are found, return an empty array []."""
+Return a JSON object with a "projects" key containing an array of projects. If no projects are found, return {{"projects": []}}."""
 
         try:
             result = self.llm.generate_json(

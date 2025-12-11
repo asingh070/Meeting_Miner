@@ -46,9 +46,29 @@ class MeetingPipeline:
             Dictionary with meeting ID and extracted data
         """
         # Parse transcript
-        parsed = self.parser.parse(transcript)
+        # If transcript_json is provided, use it directly; otherwise parse the transcript string
+        if transcript_json and isinstance(transcript_json, dict):
+            # Use provided JSON directly (parse method accepts dict)
+            parsed = self.parser.parse(transcript_json)
+        else:
+            # Parse from transcript string
+            parsed = self.parser.parse(transcript)
+        
         transcript_text = self.parser.get_full_text(parsed)
         speakers = self.parser.get_speakers(parsed)
+        
+        # Extract title and meeting_id from parsed JSON if present
+        extracted_title = self.parser.get_title(parsed)
+        extracted_meeting_id = self.parser.get_meeting_id(parsed)
+        
+        # Use extracted title if no title was provided
+        if not title and extracted_title:
+            title = extracted_title
+            logger.info(f"Using title from JSON: {title}")
+        
+        # Log extracted meeting_id if present (for reference, not stored as DB field)
+        if extracted_meeting_id:
+            logger.info(f"Found meeting_id in JSON: {extracted_meeting_id}")
         
         # Store meeting in database
         db = get_db_session()
@@ -60,11 +80,12 @@ class MeetingPipeline:
                 project_name = project_name.strip()
                 logger.info(f"Using user-provided project name: {project_name}")
             
+            # Store the parsed JSON (which includes meeting_id if present)
             meeting = Meeting(
                 title=title,
                 project_name=project_name,
                 transcript_text=transcript_text,
-                transcript_json=transcript_json or parsed
+                transcript_json=parsed
             )
             db.add(meeting)
             db.commit()

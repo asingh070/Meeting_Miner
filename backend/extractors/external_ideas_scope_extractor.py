@@ -24,20 +24,22 @@ IMPORTANT: Focus on EXTERNAL ideas - things that are ADDITIONAL to the main proj
 
 The transcript may contain Hinglish (Hindi-English mix) or other multilingual content. Understand and process it correctly.
 
-Return a JSON array with the following structure:
-[
-  {
-    "idea": "Name or title of the idea/project",
-    "description": "Detailed description of what could be built",
-    "scope": "The scope and potential of this idea",
-    "feasibility": "high|medium|low",
-    "potential_value": "Why this idea is valuable or what problem it solves",
-    "suggested_by": "Person who suggested it (if mentioned)",
-    "related_to": "How it relates to the main discussion (if applicable)"
-  }
-]
+Return a JSON object with a "ideas" key containing an array with the following structure:
+{
+  "ideas": [
+    {
+      "idea": "Name or title of the idea/project",
+      "description": "Detailed description of what could be built",
+      "scope": "The scope and potential of this idea",
+      "feasibility": "high|medium|low",
+      "potential_value": "Why this idea is valuable or what problem it solves",
+      "suggested_by": "Person who suggested it (if mentioned)",
+      "related_to": "How it relates to the main discussion (if applicable)"
+    }
+  ]
+}
 
-If no external ideas or scope are identified, return an empty array []."""
+If no external ideas or scope are identified, return {"ideas": []}."""
 
     def __init__(self):
         """Initialize extractor."""
@@ -75,7 +77,7 @@ Look for:
 Transcript:
 {transcript_text}
 
-Return a JSON array of external ideas/scope. If no external ideas are found, return an empty array []."""
+Return a JSON object with an "ideas" key containing an array of external ideas/scope. If no external ideas are found, return {{"ideas": []}}."""
 
         try:
             result = self.llm.generate_json(

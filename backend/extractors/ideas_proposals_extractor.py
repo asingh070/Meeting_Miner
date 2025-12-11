@@ -24,19 +24,21 @@ If no clear ideas or proposals are present, return an empty array.
 
 The transcript may contain Hinglish (Hindi-English mix) or other multilingual content. Understand and process it correctly.
 
-Return a JSON array with the following structure:
-[
-  {
-    "idea": "Description of the idea or proposal",
-    "description": "Detailed description of what could be built",
-    "potential_value": "Why this idea is valuable or what problem it solves",
-    "feasibility": "high|medium|low",
-    "suggested_by": "Person who suggested it (if mentioned)",
-    "related_project": "Related project name (if applicable)"
-  }
-]
+Return a JSON object with an "ideas" key containing an array with the following structure:
+{
+  "ideas": [
+    {
+      "idea": "Description of the idea or proposal",
+      "description": "Detailed description of what could be built",
+      "potential_value": "Why this idea is valuable or what problem it solves",
+      "feasibility": "high|medium|low",
+      "suggested_by": "Person who suggested it (if mentioned)",
+      "related_project": "Related project name (if applicable)"
+    }
+  ]
+}
 
-If no ideas or proposals can be identified, return an empty array []."""
+If no ideas or proposals can be identified, return {"ideas": []}."""
 
     def __init__(self):
         """Initialize extractor."""
@@ -66,7 +68,7 @@ IMPORTANT: Only extract ideas/proposals if they are clearly mentioned and have e
 Transcript:
 {transcript_text}
 
-Return a JSON array of ideas/proposals. If none are found, return an empty array []."""
+Return a JSON object with an "ideas" key containing an array of ideas/proposals. If none are found, return {{"ideas": []}}."""
 
         try:
             result = self.llm.generate_json(
