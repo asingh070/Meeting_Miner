@@ -45,7 +45,7 @@ MeetingMiner is an intelligent system that processes meeting transcripts and ext
    ```
    
    Edit `.env` and configure:
-   - `LLM_PROVIDER`: Choose `groq`, `anthropic`, or `local`
+   - `LLM_PROVIDER`: Choose `groq`
    - API keys for your chosen provider
    - Model names (optional, defaults provided)
 
@@ -90,72 +90,6 @@ Open your browser and navigate to `http://localhost:5000` to access the web inte
    - Browse all processed meetings
    - Access past meeting data
 
-### Example Transcript Formats
-
-#### Plain Text
-```
-John: Hey team, we need to discuss the Q4 project timeline.
-Sarah: Yeah, I think we should aim for end of November.
-John: Haan yaar, dekh lenge. But we need to make sure the API is ready first.
-Sarah: That's a blocker. The API team hasn't started yet.
-```
-
-#### JSON Format
-```json
-{
-  "segments": [
-    {
-      "speaker": "John",
-      "text": "Hey team, we need to discuss the Q4 project timeline.",
-      "timestamp": "00:01:23"
-    },
-    {
-      "speaker": "Sarah",
-      "text": "Yeah, I think we should aim for end of November.",
-      "timestamp": "00:01:45"
-    }
-  ]
-}
-```
-
-## Configuration
-
-### LLM Providers
-
-#### Groq (Default)
-```env
-LLM_PROVIDER=groq
-GROQ_API_KEY=your_key_here
-GROQ_MODEL=llama-3.1-70b-versatile
-```
-
-Get your Groq API key from [https://console.groq.com](https://console.groq.com)
-
-Available Groq models include:
-- `llama-3.1-70b-versatile` (default, best for complex tasks)
-- `llama-3.1-8b-instant` (faster, good for simple tasks)
-- `mixtral-8x7b-32768` (long context)
-- `gemma-7b-it` (efficient)
-
-#### Anthropic
-```env
-LLM_PROVIDER=anthropic
-ANTHROPIC_API_KEY=your_key_here
-ANTHROPIC_MODEL=claude-3-opus-20240229
-```
-
-#### Local (Ollama)
-```env
-LLM_PROVIDER=local
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama2
-```
-
-Make sure Ollama is running and the model is downloaded:
-```bash
-ollama serve
-ollama pull llama2
-```
 
 ## Project Structure
 
