@@ -1,0 +1,75 @@
+{
+  "title": "Q4 Planning Meeting",
+  "date": "2024-01-15",
+  "participants": ["John", "Sarah", "Mike"],
+  "segments": [
+    {
+      "speaker": "John",
+      "text": "Hey team, thanks for joining. Let's discuss the Q4 roadmap.",
+      "timestamp": "00:00:00"
+    },
+    {
+      "speaker": "Sarah",
+      "text": "Sure, I think we should prioritize the mobile app launch.",
+      "timestamp": "00:00:15"
+    },
+    {
+      "speaker": "Mike",
+      "text": "Haan yaar, dekh lenge. But we need to make sure the backend API is ready first.",
+      "timestamp": "00:00:30"
+    },
+    {
+      "speaker": "John",
+      "text": "That's a good point. Sarah, can you check with the API team?",
+      "timestamp": "00:00:45"
+    },
+    {
+      "speaker": "Sarah",
+      "text": "Yeah, I'll talk to them. But I'm not sure if they've started yet.",
+      "timestamp": "00:01:00"
+    },
+    {
+      "speaker": "Mike",
+      "text": "That could be a blocker. We should have a backup plan.",
+      "timestamp": "00:01:15"
+    },
+    {
+      "speaker": "John",
+      "text": "Agreed. Let's also discuss the customer feedback we got last week.",
+      "timestamp": "00:01:30"
+    },
+    {
+      "speaker": "Sarah",
+      "text": "Right, customers are asking for dark mode. That's a high priority feature.",
+      "timestamp": "00:01:45"
+    },
+    {
+      "speaker": "Mike",
+      "text": "I can take that on. Should be done in 2 weeks.",
+      "timestamp": "00:02:00"
+    },
+    {
+      "speaker": "John",
+      "text": "Great! Any other concerns?",
+      "timestamp": "00:02:15"
+    },
+    {
+      "speaker": "Sarah",
+      "text": "The analytics dashboard is still pending. We need to get that done.",
+      "timestamp": "00:02:30"
+    },
+    {
+      "speaker": "Mike",
+      "text": "I think we can push that to next quarter. Current priorities are more important.",
+      "timestamp": "00:02:45"
+    },
+    {
+      "speaker": "John",
+      "text": "Okay, sounds good. Let's meet again next week to check progress.",
+      "timestamp": "00:03:00"
+    }
+  ]
+}
+
+
+

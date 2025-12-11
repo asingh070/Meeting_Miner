@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I2E Meeting Miner - Turn meetings into intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-container">
+                <div class="logo-section" onclick="showPage('upload', event)" style="cursor: pointer;">
+                    <div class="logo-icon">
+                        <div class="logo-square"></div>
+                        <div class="logo-square"></div>
+                        <div class="logo-square"></div>
+                    </div>
+                    <span class="logo-text">I2E Meeting Miner</span>
+                </div>
+                
+                <div class="nav-links">
+                    <button class="nav-link active" onclick="showPage('upload', event)">Upload</button>
+                    <button class="nav-link" onclick="showPage('results', event)">Results</button>
+                    <button class="nav-link" onclick="showPage('chatbot', event)">Chatbot</button>
+                    <button class="nav-link" onclick="showPage('history', event)">History</button>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">READY</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Hero Section (for Upload Page) -->
+            <div id="upload-page" class="page active">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-headline">
+                            Transform meeting conversations into <span class="highlight">structured intelligence</span>.
+                        </h1>
+                        <p class="hero-description">
+                            I2E Meeting Miner extracts decisions, projects, risks, and company pulse from your meeting transcripts. 
+                            Turn messy conversations into actionable insights with AI-powered analysis.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showPage('chatbot', event)">
+                                Chatbot →
+                            </button>
+                            <button class="btn btn-secondary" onclick="showPage('results', event)">
+                                View Results
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-graphics">
+                        <div class="graphic-stack">
+                            <div class="stack-square"></div>
+                            <div class="stack-square"></div>
+                            <div class="stack-square"></div>
+                        </div>
+                        <div class="network-pattern"></div>
+                    </div>
+                </div>
+
+                <!-- Upload Form Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Upload Meeting Transcript</h2>
+                        <p>Choose your preferred method to upload meeting data</p>
+                    </div>
+
+                    <div class="upload-section">
+                        <div class="file-upload-area" id="file-upload-area">
+                            <input type="file" id="file-input" accept=".txt,.json" style="display: none;">
+                            <div class="upload-icon">📁</div>
+                            <p class="upload-text">Click to upload or drag and drop</p>
+                            <p class="file-hint">Supports .txt and .json files</p>
+                        </div>
+                        <div id="file-name" class="file-name"></div>
+                    </div>
+
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <div class="text-input-section">
+                        <h3>Paste transcript directly</h3>
+                        <textarea id="transcript-text" placeholder="Paste the meeting transcript text here..." rows="10"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="meeting-title">Meeting Title (optional)</label>
+                        <input type="text" id="meeting-title" placeholder="e.g., Q4 Planning Meeting">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-name">Project Name (optional)</label>
+                        <input type="text" id="project-name" placeholder="e.g., Mobile App Launch">
+                        <small style="color: rgba(255, 255, 255, 0.6); font-size: 0.85em;">If not provided, the system will extract it from the transcript</small>
+                    </div>
+
+                    <button class="btn btn-primary btn-large" onclick="processMeeting()" id="process-btn">
+                        Process Meeting
+                    </button>
+
+                    <div id="upload-result" class="result-message"></div>
+                </div>
+            </div>
+
+            <!-- Results Page -->
+            <div id="results-page" class="page">
+                <div class="page-header">
+                    <h2>View Meeting Results</h2>
+                    <p>Select a meeting to view detailed analysis</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="meeting-select">Select a meeting</label>
+                    <select id="meeting-select" onchange="loadMeetingDetails()">
+                        <option value="">Loading meetings...</option>
+                    </select>
+                </div>
+
+                <div id="results-content" class="results-content">
+                    <div class="info-message">Select a meeting to view results</div>
+                </div>
+            </div>
+
+            <!-- Chatbot Page -->
+            <div id="chatbot-page" class="page">
+                <div class="page-header">
+                    <h2>Meeting Chatbot</h2>
+                    <p>Ask questions about your meeting transcripts using natural language</p>
+                </div>
+
+                <div class="chat-controls">
+                    <div class="form-group">
+                        <label>Query scope:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="scope" value="all" checked onchange="updateChatScope()">
+                                All meetings
+                            </label>
+                            <label>
+                                <input type="radio" name="scope" value="project" onchange="updateChatScope()">
+                                Specific project
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="project-select-chat" style="display: none;">
+                        <label for="chat-project-select">Select project</label>
+                        <select id="chat-project-select" onchange="onChatProjectChange()">
+                            <option value="">Loading...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages"></div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" placeholder="Ask a question about the meetings..." 
+                               onkeypress="handleChatKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Page -->
+            <div id="history-page" class="page">
+                <div class="page-header">
+                    <h2>Meeting History</h2>
+                    <p>Browse all processed meetings</p>
+                </div>
+                <div id="history-content" class="history-content">
+                    <div class="info-message">Loading meetings...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
